@@ -30,10 +30,12 @@ async def generate(request: FrontendPayload):
             temperature=request.temperature,
             top_p=request.top_p
         )
+        context = {}
 
         # Pass the parsed request to the model
-        response_stream = await model_pool.generate_text_stream(
+        response_stream = model_pool.generate_text_stream(
             query=llm_request.query,
+            context = context,
             history_messages=llm_request.history_messages,
             max_new_tokens=llm_request.max_new_tokens,
             temperature=llm_request.temperature,
